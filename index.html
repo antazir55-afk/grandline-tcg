@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Grand Line TCG</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #0a1a2f; }
+  </style>
+</head>
+<body>
+  <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+  </script>
+  <script type="module">
+    import * as THREE from "three";
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
+    camera.position.z = 4;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(innerWidth, innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Eine Karte im Format 63 x 88 mm
+    const karte = new THREE.Mesh(
+      new THREE.BoxGeometry(1.26, 1.76, 0.03),
+      new THREE.MeshNormalMaterial()
+    );
+    scene.add(karte);
+
+    renderer.setAnimationLoop(() => {
+      karte.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    });
+  </script>
+</body>
+</html>
